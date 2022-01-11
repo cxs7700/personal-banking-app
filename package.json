@@ -1,0 +1,23 @@
+{
+  "name": "banking-app",
+  "version": "1.0.0",
+  "description": "",
+  "default": "index.html",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html --dist-dir ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cxs7700/personal-banking-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cxs7700/personal-banking-app/issues"
+  },
+  "homepage": "https://github.com/cxs7700/personal-banking-app#readme",
+  "devDependencies": {
+    "parcel": "^2.1.1"
+  }
+}
