@@ -1,18 +1,9 @@
 'use strict';
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// BANKIST APP
-
-/////////////////////////////////////////////////
-// Data
-
-// DIFFERENT DATA! Contains movement dates, currency and locale
-
 const account1 = {
   owner: 'Jonas Schmedtmann',
   movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
-  interestRate: 1.2, // %
+  interestRate: 1.2,
   pin: 1111,
 
   movementsDates: [
@@ -26,7 +17,7 @@ const account1 = {
     '2021-12-01T10:51:36.790Z',
   ],
   currency: 'EUR',
-  locale: 'pt-PT', // de-DE
+  locale: 'pt-PT',
 };
 
 const account2 = {
@@ -105,8 +96,6 @@ const formatMovementDate = date => {
   return displayDate;
 };
 
-// Instead of using global variables, pass data that a function needs
-// into that function
 const displayMovements = (account, sort = false) => {
   // Removes dummy movements
   containerMovements.innerHTML = '';
@@ -144,9 +133,8 @@ const calcDisplayBalance = account => {
   labelBalance.textContent = `${account.balance.toFixed(2)}€`;
 };
 
-// Create function that takes in a name and returns a username
-// Loop through all accounts, compute a username based on the
-// account owner's name, and create a new attribute within
+// Loops through all accounts, computes a username based on the
+// account owner's name, and creates a new attribute within
 // the object
 // Example: 'Steven Thomas Williams' => 'stw'
 const createUsernames = accounts => {
@@ -181,7 +169,6 @@ const calcDisplaySummary = account => {
 };
 
 /////////////////////////////////////////////////
-/////////////////////////////////////////////////
 // LOGIN
 let currentAccount, timer;
 
@@ -190,7 +177,6 @@ const handleLogin = e => {
   const username = inputLoginUsername.value;
   const pin = +inputLoginPin.value;
 
-  // find() better than filter() for a SINGLE VALUE
   const account = accounts.find(
     account => username === account.username && pin === account.pin
   );
@@ -237,14 +223,8 @@ const updateUI = account => {
   calcDisplaySummary(account);
 };
 
-// FAKE ALWAYS LOGGED IN
-
 btnLogin.addEventListener('click', handleLogin);
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-
-/////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // TRANSFER
 
@@ -281,10 +261,6 @@ const handleTransfer = e => {
 btnTransfer.addEventListener('click', handleTransfer);
 
 /////////////////////////////////////////////////
-/////////////////////////////////////////////////
-
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
 // LOAN
 
 const handleLoan = e => {
@@ -310,10 +286,6 @@ const handleLoan = e => {
 
 btnLoan.addEventListener('click', handleLoan);
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-
-/////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // TRANSFER
 
@@ -342,9 +314,6 @@ btnClose.addEventListener('click', closeAccount);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
-
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
 // SORTING
 
 // const toggleSort = () => {
@@ -363,149 +332,6 @@ btnSort.addEventListener('click', function (e) {
   displayMovements(currentAccount, !sorted);
   sorted = !sorted;
 });
-
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// LECTURES
-
-// Conversion: casting a string to an integer
-console.log(Number('23'));
-console.log(+'23');
-
-// Parsing: call parse methods on the Number object
-console.log(Number.parseInt('30px', 10));
-console.log(Number.parseInt('e23', 10));
-
-console.log(Number.parseInt('2.5rem'));
-console.log(Number.parseFloat('2.5rem'));
-
-// Checking if a value is a number: isNaN() and isFinite()
-// `isFinite()` is better to check if a value is a number
-console.log(Number.isNaN(20)); // false
-console.log(Number.isNaN('20')); // false
-console.log(Number.isNaN(+'20X')); // true
-console.log(Number.isNaN(23 / 0)); // false
-
-console.log(Number.isFinite(20)); // true
-console.log(Number.isFinite('20')); // false
-console.log(Number.isFinite(+'20X')); // false
-console.log(Number.isFinite(23 / 0)); // false
-
-console.log(Number.isInteger(23)); // true
-console.log(Number.isInteger(23.0)); // true
-console.log(Number.isInteger(23 / 0)); // false
-
-// MATH AND ROUNDING
-
-// Rounding Integers
-// .trunc() removes any fractional/decimal digits -- similar to .floor()
-console.log(Math.trunc(Math.random() * 6) + 1);
-
-const randomInt = (min, max) => {
-  return Math.trunc(Math.random() * (max - min) + 1) + min;
-};
-console.log(randomInt(10, 20));
-
-// Rounding Decimals
-// .toFixed() will ALWAYS return a string
-console.log((2.7).toFixed(0));
-console.log((2.7).toFixed(3));
-console.log(+(2.745).toFixed(2)); // '+' makes it a number
-
-// NUMERIC SEPARATORS
-const diameter = 287_460_000_000; // JS ignores underscores
-console.log(diameter);
-
-const price = 345_99;
-console.log(price);
-
-const transferFee1 = 15_00;
-const transferFee2 = 1_500;
-
-const PI = 3.14_15;
-// const PI = 3_.1415; // can only use `_` between two numbers
-// const PI = 3._1415; // can only use `_` between two numbers
-console.log(PI);
-
-console.log(Number('230_000')); // NaN => does not work in string
-console.log(Number.parseInt('230_00')); // 230 => gets first set of numbers
-
-// WORKING WITH BIGINT
-// use 'n'
-console.log(97148382959327492738423728n);
-console.log(BigInt(128637384)); // should be used for small numbers still
-
-// Operations
-console.log(10000n + 10000n);
-const huge = 89237186927834817363n;
-const num = 23;
-// console.log(huge * num); // error
-console.log(huge * BigInt(num)); // no error because now both are BigInts
-
-// Exceptions
-console.log(20n > 15); // true
-console.log(20n === 20); // false
-console.log(typeof 20n); // bigint
-console.log(20n == '20'); // true
-
-console.log(huge + ' is REALLY big!!!'); // works for string concatenation
-
-// Divisions
-console.log(11n / 3n); // cuts off the decimal point
-console.log(10 / 3);
-
-// CREATING DATES
-console.log(new Date(account1.movementsDates[0])); // Z = UTC
-console.log(new Date(2037, 10, 19, 15, 23, 5)); // shows November
-console.log(new Date(2037, 10, 31)); // Dec 1
-
-// Working with Dates
-const future = new Date(2037, 10, 19, 15, 23);
-console.log(future);
-console.log(future.getFullYear());
-console.log(future.getMonth());
-console.log(future.getDate()); // gets day of the month
-console.log(future.getDay()); // gets day of the week as an int
-console.log(future.getHours());
-console.log(future.getMinutes());
-console.log(future.getSeconds());
-console.log(future.toISOString());
-console.log(future.getTime());
-
-console.log(Date.now()); // time now
-
-// OPERATIONS WITH DATES
-console.log(Number(future)); // can now do operations on dates
-console.log(+future);
-// const calcDaysPassed = (date1, date2) =>
-//   Math.abs(date2 - date1) / (1000 * 60 * 60 * 24);
-// const days1 = calcDaysPassed(new Date(2037, 3, 4), new Date(2037, 3, 14));
-// console.log(`${days1} days`);
-
-// TIMERS: setTimeout() and setInterval()
-
-// setTimeout()
-const ingredients = ['olives', 'spinach'];
-const pizzaTimer = setTimeout(
-  (ing1, ing2) => console.log(`Here is your pizza with ${ing1} and ${ing2}`),
-  3000, // in milliseconds
-  ...ingredients
-); // can have as many arguments, but must have callback function parameters
-console.log('Waiting');
-
-// Clear timeout conditionally
-if (ingredients.includes('spinach')) {
-  clearTimeout(pizzaTimer);
-}
-
-// setInterval()
-// setInterval(() => {
-//   const now = new Date();
-//   const hours = `${now.getHours() % 12}`.padStart(2, 0); // remove `% 12`
-//   const min = `${now.getMinutes()}`.padStart(2, 0);
-//   const seconds = `${now.getSeconds()}`.padStart(2, 0);
-//   console.log(`${hours}:${min}:${seconds}`);
-// }, 1000);
 
 // IMPLEMENTING A COUNTDOWN TIMER
 
